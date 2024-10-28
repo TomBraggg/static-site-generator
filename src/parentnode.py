@@ -19,9 +19,8 @@ class ParentNode(HTMLNode):
             return tree_string
         
         tree_string += f'<{self.tag}{self.props_to_html()}>' 
-
         for child in self.children:
             tree_string += child.to_html()
-
         tree_string += f'</{self.tag}>'
+
         return tree_string

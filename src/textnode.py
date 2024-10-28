@@ -1,19 +1,20 @@
 from enum import Enum
+from leafnode import LeafNode
 
 
 class TextType(Enum):
-    NORMAL = "normal"
+    TEXT = "text"
     BOLD = "bold"
     ITALIC = "italic"
     CODE = "code"
-    LINKS = "links"
-    IMAGES = "images"
+    LINK = "link"
+    IMAGE = "image"
 
 
 class TextNode():
     def __init__(self, text, enum, url=None):
         self.text = text
-        self.text_type = enum.value
+        self.text_type = enum
         self.url = url
 
     def __eq__(self, node):
@@ -23,3 +24,25 @@ class TextNode():
 
     def __repr__(self):
         return f'TextNode({self.text}, {self.text_type}, {self.url})' if self.url else f'TextNode({self.text}, {self.text_type})'
+
+def text_node_to_html_node(text_node):
+    match text_node.text_type:
+        case TextType.TEXT: 
+            return LeafNode(text_node.text)
+        case TextType.BOLD:
+            return LeafNode(text_node.text, tag="b")
+        case TextType.ITALIC:
+            return LeafNode(text_node.text, tag="i")
+        case TextType.CODE:
+            return LeafNode(text_node.text, tag="code")
+        case TextType.LINK:
+            return LeafNode(text_node.text, tag="a", props={
+                "href": text_node.url,
+            })
+        case TextType.IMAGE:
+            return LeafNode("", tag="img", props={
+                "src": text_node.url,
+                "alt": text_node.text,
+            })
+        case _:
+           raise Exception(f"Text type {text_node.text_type} not found") 
