@@ -12,37 +12,15 @@ class TextType(Enum):
 
 
 class TextNode():
-    def __init__(self, text, enum, url=None):
+    def __init__(self, text: str, enum: TextType, url: str=None) -> 'TextNode':
         self.text = text
         self.text_type = enum
         self.url = url
 
-    def __eq__(self, node):
+    def __eq__(self, node) -> bool:
         return (self.text == node.text and
                 self.text_type == node.text_type and
                 self.url == node.url)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f'TextNode({self.text}, {self.text_type}, {self.url})' if self.url else f'TextNode({self.text}, {self.text_type})'
-
-def text_node_to_html_node(text_node):
-    match text_node.text_type:
-        case TextType.TEXT: 
-            return LeafNode(text_node.text)
-        case TextType.BOLD:
-            return LeafNode(text_node.text, tag="b")
-        case TextType.ITALIC:
-            return LeafNode(text_node.text, tag="i")
-        case TextType.CODE:
-            return LeafNode(text_node.text, tag="code")
-        case TextType.LINK:
-            return LeafNode(text_node.text, tag="a", props={
-                "href": text_node.url,
-            })
-        case TextType.IMAGE:
-            return LeafNode("", tag="img", props={
-                "src": text_node.url,
-                "alt": text_node.text,
-            })
-        case _:
-           raise Exception(f"Text type {text_node.text_type} not found") 

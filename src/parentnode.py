@@ -3,10 +3,10 @@ from leafnode import LeafNode
 
 
 class ParentNode(HTMLNode):
-    def __init__(self, children, tag=None, props=None):
+    def __init__(self, children: list[HTMLNode], tag: str=None, props: dict=None):
         super().__init__(tag=tag, value=None, children=children, props=props)
 
-    def to_html(self):
+    def to_html(self) -> str:
         if not self.tag:
             raise ValueError("No tag associated with parent node")
         if not self.children:

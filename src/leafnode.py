@@ -2,10 +2,10 @@ from htmlnode import HTMLNode
 
 
 class LeafNode(HTMLNode):
-    def __init__(self, value, tag=None, props=None):
+    def __init__(self, value: str, tag: str=None, props: dict=None) -> 'LeafNode':
         super().__init__(tag=tag, value=value, children=None, props=props)
 
-    def to_html(self):
+    def to_html(self) -> str:
         if not self.value:
             raise ValueError("No value associated with leaf node")
 
