@@ -1,3 +1,4 @@
+import re
 from textnode import TextNode, TextType
 from leafnode import LeafNode
 
@@ -42,3 +43,7 @@ def split_nodes_delimeter(old_nodes: TextNode, delimiter: str, text_type: TextTy
         new_nodes.append(new_node_segments)
 
     return new_nodes
+
+def extract_markdown_images(text):
+    md_images = re.findall("!\[(.*?)\]\((.*?)\)", text)
+    return md_images

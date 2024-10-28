@@ -1,7 +1,7 @@
 import unittest
 from htmlnode import HTMLNode
 from textnode import TextNode, TextType
-from textnode_utility import text_node_to_html_node, split_nodes_delimeter
+from textnode_utility import text_node_to_html_node, split_nodes_delimeter, extract_markdown_images
 
 
 class TestTextNode(unittest.TestCase):
@@ -84,9 +84,14 @@ class TestTextNode(unittest.TestCase):
             TextNode("code block", TextType.CODE),
             TextNode(" section", TextType.TEXT)
         ]]
-        print(f"new nodes: {new_nodes}")
-        print(f"expected result : {expected_result}")
         self.assertEqual(new_nodes, expected_result)
+
+    def test_extract_markdown_images(self):
+        text = "This is text with a ![rick roll](https://i.imgur.com/aKaOqIh.gif) and ![obi wan](https://i.imgur.com/fJRm4Vk.jpeg)"
+        extracted_images = extract_markdown_images(text)
+        expected_result = [("rick roll", "https://i.imgur.com/aKaOqIh.gif"), ("obi wan", "https://i.imgur.com/fJRm4Vk.jpeg")]
+        self.assertEqual(extracted_images, expected_result)
+
 
 if __name__ == "__main__":
     unittest.main()
