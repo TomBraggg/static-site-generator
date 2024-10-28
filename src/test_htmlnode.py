@@ -2,8 +2,6 @@ import unittest
 from htmlnode import HTMLNode
 
 class TestTextNode(unittest.TestCase):
-    def test_to_html(self):
-        pass
 
     def test_props_to_html(self):
         my_node = HTMLNode(props={
