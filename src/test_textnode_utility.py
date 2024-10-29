@@ -1,7 +1,7 @@
 import unittest
 from htmlnode import HTMLNode
 from textnode import TextNode, TextType
-from textnode_utility import text_node_to_html_node, split_nodes_delimeter, extract_markdown_images
+from textnode_utility import *
 
 
 class TestTextNode(unittest.TestCase):
@@ -92,6 +92,36 @@ class TestTextNode(unittest.TestCase):
         expected_result = [("rick roll", "https://i.imgur.com/aKaOqIh.gif"), ("obi wan", "https://i.imgur.com/fJRm4Vk.jpeg")]
         self.assertEqual(extracted_images, expected_result)
 
+    def test_extract_markdown_links(self):
+        text = "This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)"
+        extracted_links = extract_markdown_links(text)
+        expected_result = [("to boot dev", "https://www.boot.dev"), ("to youtube", "https://www.youtube.com/@bootdotdev")]
+        self.assertEqual(extracted_links, expected_result)
+
+    def test_split_node_image(self):
+        text = "This is text with a ![rick roll](https://i.imgur.com/aKaOqIh.gif) and ![obi wan](https://i.imgur.com/fJRm4Vk.jpeg)"
+        test_node = TextNode(text, TextType.TEXT)
+        new_nodes = split_nodes_image([test_node])
+        expected_result = [[
+            TextNode("This is text with a ", TextType.TEXT),
+            TextNode("rick roll", TextType.IMAGE, url = "https://i.imgur.com/aKaOqIh.gif"),
+            TextNode(" and ", TextType.TEXT),
+            TextNode("obi wan", TextType.IMAGE, "https://i.imgur.com/fJRm4Vk.jpeg")
+        ]]
+        self.assertEqual(new_nodes, expected_result)
+
+    def test_split_node_link(self):
+        text = "This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)"
+        test_node = TextNode(text, TextType.TEXT)
+        new_nodes = split_nodes_link([test_node])
+        expected_result = [[
+            TextNode("This is text with a link ", TextType.TEXT),
+            TextNode("to boot dev", TextType.LINK, url="https://www.boot.dev"),
+            TextNode(" and ", TextType.TEXT),
+            TextNode("to youtube", TextType.LINK, url="https://www.youtube.com/@bootdotdev")
+        ]]
+        print(f"new_nodes: {new_nodes}")
+        self.assertEqual(new_nodes, expected_result)
 
 if __name__ == "__main__":
     unittest.main()
