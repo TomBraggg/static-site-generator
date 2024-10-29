@@ -28,17 +28,11 @@ def text_node_to_html_node(text_node: TextNode) -> HTMLNode:
 
 def text_to_textnodes(text: str) -> list[TextNode]:
     nodes = [TextNode(text, TextType.TEXT)]
-    print(f"\ninital textnodes:\n{nodes}\n")
     nodes = split_nodes_delimeter(nodes, '**', TextType.BOLD)
-    print(f"\nbolded textnodes:\n{nodes}\n")
     nodes = split_nodes_delimeter(nodes, '*', TextType.ITALIC)
-    print(f"\nitaliced textnodes:\n{nodes}\n")
     nodes = split_nodes_delimeter(nodes, '`', TextType.CODE)
-    print(f"\coded textnodes:\n{nodes}\n")
     nodes = split_nodes_image(nodes)
-    print(f"\nimaged textnodes:\n{nodes}\n")
     nodes = split_nodes_link(nodes)
-    print(f"\nlinked textnodes:\n{nodes}\n")
     return nodes
 
 def split_nodes_delimeter(old_nodes: list[TextNode], delimiter: str, text_type: TextType) -> list[TextNode]:

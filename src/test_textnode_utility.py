@@ -132,8 +132,6 @@ class TestTextNode(unittest.TestCase):
             TextNode(" and a ", TextType.TEXT),
             TextNode("link", TextType.LINK, "https://boot.dev"),
         ]
-        print(f"\ntext_to_textnodes(text):\n{text_to_textnodes(text)}\n")
-        print(f"\nexpected_result:\n{expected_result}\n")
         self.assertListEqual(text_to_textnodes(text), expected_result)
 
 if __name__ == "__main__":
