@@ -48,9 +48,8 @@ class TestTextNode(unittest.TestCase):
         test_url = "google.com"
         test_text_node = TextNode(test_text, TextType.IMAGE, url=test_url)
         test_output = text_node_to_html_node(test_text_node)
-        expected_output = HTMLNode(value="", tag="img", props={
-            "src": test_url,
-            "alt": test_text,
+        expected_output = HTMLNode(value=test_text, tag="img", props={
+            "src": test_url
         })
         self.assertEqual(test_output, expected_output)
 
@@ -133,6 +132,7 @@ class TestTextNode(unittest.TestCase):
             TextNode("link", TextType.LINK, "https://boot.dev"),
         ]
         self.assertListEqual(text_to_textnodes(text), expected_result)
+
 
 if __name__ == "__main__":
     unittest.main()

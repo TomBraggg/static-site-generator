@@ -21,7 +21,7 @@ This is the same paragraph on a new line!
         expected_result = [heading, paragraph, bullets]
         self.assertListEqual(blocks, expected_result)
 
-def test_markdown_to_blocks_newlines(self):
+    def test_markdown_to_blocks_newlines(self):
         md = """
 This is **bolded** paragraph
 
@@ -44,6 +44,47 @@ This is the same paragraph on a new line
             ],
         )
 
+    def test_block_to_block_type_para(self):
+        block = "This is just a paragraph lol\nThis is the second line"
+        block_type = block_to_block_type(block)
+        expected_result = BlockType.PARAGRAPH.value
+        self.assertEqual(block_type, expected_result)
+
+    def test_block_to_block_type_code(self):
+        block = "```This is some amazing code brev\nMultiline code no way```"
+        block_type = block_to_block_type(block)
+        expected_result = BlockType.CODE.value
+        self.assertEqual(block_type, expected_result)
+
+    def test_block_to_block_type_quote(self):
+        block = ">This is my quote\n>You either win or you learn"
+        block_type = block_to_block_type(block)
+        expected_result = BlockType.QUOTE.value
+        self.assertEqual(block_type, expected_result)
+
+    def test_block_to_block_type_unordered_list_1(self):
+        block = "- This is my unordered list\n- How disorderly"
+        block_type = block_to_block_type(block)
+        expected_result = BlockType.UNORDERED_LIST.value
+        self.assertEqual(block_type, expected_result)
+
+    def test_block_to_block_type_unordered_list_2(self):
+        block = "* This is my unordered list\n* How disorderly"
+        block_type = block_to_block_type(block)
+        expected_result = BlockType.UNORDERED_LIST.value
+        self.assertEqual(block_type, expected_result)
+
+    def test_block_to_block_type_ordered_list_1(self):
+        block = "1. I\n2. Will\n3. Have\n4. Order!"
+        block_type = block_to_block_type(block)
+        expected_result = BlockType.ORDERED_LIST.value
+        self.assertEqual(block_type, expected_result)
+
+    def test_block_to_block_type_ordered_list_2(self):
+        block = "1. I\n3. Won't\n4. Have\n5. Order!"
+        block_type = block_to_block_type(block)
+        expected_result = BlockType.PARAGRAPH.value
+        self.assertEqual(block_type, expected_result)
 
 if __name__ == "__main__":
     unittest.main()

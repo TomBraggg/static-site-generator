@@ -19,9 +19,8 @@ def text_node_to_html_node(text_node: TextNode) -> HTMLNode:
                 "href": text_node.url,
             })
         case TextType.IMAGE:
-            return LeafNode("", tag="img", props={
-                "src": text_node.url,
-                "alt": text_node.text,
+            return LeafNode(text_node.text, tag="img", props={
+                "src": text_node.url
             })
         case _:
            raise Exception(f"Text type {text_node.text_type} not found") 
