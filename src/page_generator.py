@@ -46,7 +46,6 @@ Destination_path: {dest_path}
         file.write(html)
 
 def generate_page_recursive(dir_path_content, template_path, dest_dir_path) -> None:
-    # for every md file in content generate .html file using same template and write all in public
     nodes = os.listdir(dir_path_content)
     for node in nodes:
         current_path = f"{dir_path_content}/{node}"
