@@ -5,7 +5,7 @@ from htmlnode import *
 from textnode_utility import *
 
 
-def markdown_to_html_node(markdown):
+def markdown_to_html_str(markdown: str) -> str:
     html_document = ""
     blocks = markdown_to_blocks(markdown)
     for block in blocks:
@@ -21,22 +21,13 @@ def markdown_to_html_node(markdown):
         html_document += block_html_string
     return html_document
 
-
-        # Think i have the block as a string
-        # Blocks could contain blocks
-        # Need to embed the parent nodes with this
-
-        # Markdown file to blocks (str)
-        # Blocks can contain more blocks
-        # Each Block is 1 string
-        # Convert each block to list[textnodes]
-        # Convert text nodes to HTML nodes
-        # Convert HTML nodes to HTML String
-        # Compount HTML Strings
-        # Embed HTML string in block
-
-        # Considerations
-        # Headers increment 1 -> 6
+def extract_title(markdown: str) -> str:
+    blocks = markdown_to_blocks(markdown)
+    for block in blocks:
+        block_type = block_to_block_type(block)
+        if block_type == "h1":
+            return trim_block(block, block_type)
+    raise ValueError(f"Could not find title (header 1) in document: {markdown}")
 
 def trim_block(block: str, blocktype: str) -> str:
     match blocktype:
@@ -57,18 +48,18 @@ def trim_block(block: str, blocktype: str) -> str:
         case "code":
             return block[4:-3]
         case "blockquote":
-            return block[1:]
+            return block[2:]
         case "ul":
             trimmed_lines = []
             for line in block.split("\n"):
-                trimmed_line = line[2:]
+                trimmed_line = f"<li>{line[2:]}</li>"
                 trimmed_lines.append(trimmed_line)
-            return "\n".join(trimmed_lines)
+            return "".join(trimmed_lines)
         case "ol":
             trimmed_lines = []
             for line in block.split("\n"):
-                trimmed_line = line[3:]
+                trimmed_line = f"<li>{line[3:]}</li>"
                 trimmed_lines.append(trimmed_line)
-            return "\n".join(trimmed_lines)
+            return "".join(trimmed_lines)
         case _:
             raise ValueError("BlockType not found")
