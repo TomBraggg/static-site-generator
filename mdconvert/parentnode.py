@@ -1,5 +1,4 @@
 from mdconvert.htmlnode import HTMLNode
-from mdconvert.leafnode import LeafNode
 
 
 class ParentNode(HTMLNode):
