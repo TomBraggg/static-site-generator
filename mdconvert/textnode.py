@@ -1,5 +1,5 @@
 from enum import Enum
-from leafnode import LeafNode
+from mdconvert.leafnode import LeafNode
 
 
 class TextType(Enum):

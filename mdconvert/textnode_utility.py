@@ -1,7 +1,7 @@
 import re
-from htmlnode import HTMLNode
-from textnode import TextNode, TextType
-from leafnode import LeafNode
+from mdconvert.htmlnode import HTMLNode
+from mdconvert.textnode import TextNode, TextType
+from mdconvert.leafnode import LeafNode
 
 
 def text_node_to_html_node(text_node: TextNode) -> HTMLNode:
@@ -27,14 +27,14 @@ def text_node_to_html_node(text_node: TextNode) -> HTMLNode:
 
 def text_to_textnodes(text: str) -> list[TextNode]:
     nodes = [TextNode(text, TextType.TEXT)]
-    nodes = split_nodes_delimeter(nodes, '**', TextType.BOLD)
-    nodes = split_nodes_delimeter(nodes, '*', TextType.ITALIC)
-    nodes = split_nodes_delimeter(nodes, '`', TextType.CODE)
-    nodes = split_nodes_image(nodes)
-    nodes = split_nodes_link(nodes)
+    nodes = _split_nodes_delimeter(nodes, '**', TextType.BOLD)
+    nodes = _split_nodes_delimeter(nodes, '*', TextType.ITALIC)
+    nodes = _split_nodes_delimeter(nodes, '`', TextType.CODE)
+    nodes = _split_nodes_image(nodes)
+    nodes = _split_nodes_link(nodes)
     return nodes
 
-def split_nodes_delimeter(old_nodes: list[TextNode], delimiter: str, text_type: TextType) -> list[TextNode]:
+def _split_nodes_delimeter(old_nodes: list[TextNode], delimiter: str, text_type: TextType) -> list[TextNode]:
     new_nodes = []
     for old_node in old_nodes:
         if old_node.text_type != TextType.TEXT:
@@ -54,18 +54,18 @@ def split_nodes_delimeter(old_nodes: list[TextNode], delimiter: str, text_type: 
         new_nodes.extend(split_nodes)
     return new_nodes
 
-def extract_markdown_images(text: str) -> str:
+def _extract_markdown_images(text: str) -> str:
     md_images = re.findall("!\[(.*?)\]\((.*?)\)", text)
     return md_images
 
-def extract_markdown_links(text: str) -> str:
+def _extract_markdown_links(text: str) -> str:
     md_images = re.findall("\[(.*?)\]\((.*?)\)", text)
     return md_images
 
-def split_nodes_image(old_nodes: list[TextNode]) -> list[TextNode]:
+def _split_nodes_image(old_nodes: list[TextNode]) -> list[TextNode]:
     new_nodes = []
     for old_node in old_nodes:
-        image_alts_urls = extract_markdown_images(old_node.text)
+        image_alts_urls = _extract_markdown_images(old_node.text)
         if old_node.text_type != TextType.TEXT or len(image_alts_urls) == 0:
             new_nodes.append(old_node)
             continue
@@ -84,10 +84,10 @@ def split_nodes_image(old_nodes: list[TextNode]) -> list[TextNode]:
             new_nodes.append(TextNode(original_text, TextType.TEXT))
     return new_nodes
 
-def split_nodes_link(old_nodes: list[TextNode]) -> list[TextNode]:
+def _split_nodes_link(old_nodes: list[TextNode]) -> list[TextNode]:
     new_nodes = []
     for old_node in old_nodes:
-        image_alts_urls = extract_markdown_links(old_node.text)
+        image_alts_urls = _extract_markdown_links(old_node.text)
         if old_node.text_type != TextType.TEXT or len(image_alts_urls) == 0:
             new_nodes.append(old_node)
             continue

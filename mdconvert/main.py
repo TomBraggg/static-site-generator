@@ -1,4 +1,4 @@
-from page_generator import *
+from mdconvert.page_generator import start, generate_page_recursive
 
 
 content_path = "content"

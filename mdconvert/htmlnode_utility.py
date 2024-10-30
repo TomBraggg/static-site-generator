@@ -1,8 +1,6 @@
-from mdblocks import *
-from parentnode import *
-from leafnode import *
-from htmlnode import *
-from textnode_utility import *
+from mdconvert.mdblocks import markdown_to_blocks, block_to_block_type
+from mdconvert.textnode_utility import text_node_to_html_node, text_to_textnodes
+from mdconvert.parentnode import ParentNode
 
 
 def markdown_to_html_str(markdown: str) -> str:
@@ -10,7 +8,7 @@ def markdown_to_html_str(markdown: str) -> str:
     blocks = markdown_to_blocks(markdown)
     for block in blocks:
         block_type = block_to_block_type(block)
-        trimmed_block = trim_block(block, block_type)
+        trimmed_block = _trim_block(block, block_type)
         text_nodes = text_to_textnodes(trimmed_block)
         child_html_nodes = []
         for text_node in text_nodes:
@@ -26,10 +24,10 @@ def extract_title(markdown: str) -> str:
     for block in blocks:
         block_type = block_to_block_type(block)
         if block_type == "h1":
-            return trim_block(block, block_type)
+            return _trim_block(block, block_type)
     raise ValueError(f"Could not find title (header 1) in document: {markdown}")
 
-def trim_block(block: str, blocktype: str) -> str:
+def _trim_block(block: str, blocktype: str) -> str:
     match blocktype:
         case "p":
             return block

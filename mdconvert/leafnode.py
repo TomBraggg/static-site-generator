@@ -1,4 +1,4 @@
-from htmlnode import HTMLNode
+from mdconvert.htmlnode import HTMLNode
 
 
 class LeafNode(HTMLNode):
@@ -8,7 +8,6 @@ class LeafNode(HTMLNode):
     def to_html(self) -> str:
         if not self.value:
             raise ValueError(f"Leafnode: {self}\nNo value associated with leaf node")
-
         if self.tag == None:
             return self.value
         else:
