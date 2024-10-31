@@ -1,5 +1,7 @@
 # Tolkien Fan Club
 
+[Back Home](/)
+
 **I like Tolkien**. Read my [first post here](/majesty) 
 
 > All that is gold does not glitter
