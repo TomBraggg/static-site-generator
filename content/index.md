@@ -30,3 +30,5 @@ func main(){
     fmt.Println("Hello, World!")
 }
 ```
+
+**If you like python**, you can read [some of my python notes](/python) 
