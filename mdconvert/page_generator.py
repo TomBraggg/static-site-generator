@@ -3,8 +3,8 @@ import shutil
 from mdconvert.htmlnode_utility import markdown_to_html_str, extract_title
 
 
-static_path = "./static"
-public_path = "./public"
+static_path = "static"
+public_path = "public"
 
 def start() -> None:
     _wipe_public()
@@ -23,8 +23,9 @@ def generate_page_recursive(dir_path_content, template_path, dest_dir_path) -> N
             generate_page_recursive(current_path, template_path, target)
 
 def _wipe_public() -> None:
-    shutil.rmtree(public_path)
-    os.path.join("./", "public")
+    if public_path in os.listdir():
+        shutil.rmtree(public_path)
+    os.path.join(public_path)
     os.mkdir(public_path)
 
 def _copy_dir_to_target(source: str, target: str) -> None:
@@ -56,3 +57,5 @@ Destination_path: {dest_path}
     html_path = os.path.join(dest_path, "index.html")
     with open(html_path, "w") as file:
         file.write(html)
+
+_wipe_public()
