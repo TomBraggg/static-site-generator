@@ -1,5 +1,7 @@
 # Python
 
+[Back Home](/)
+
 # Object Orientated Programming
 
 - [Object-Oriented Programming](https://en.wikipedia.org/wiki/Object-oriented_programming), or "OOP", is a pattern or [[Paradigm]] for writing clean and maintainable code. Not everyone _agrees_ that object-oriented principles are the best way to write code, but, to be a good engineer, you should at least understand them.
