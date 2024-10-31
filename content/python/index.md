@@ -138,7 +138,7 @@ button {
 
 ```py
 def square(x):
-    return (x) x (x)
+    return x * x
 # Assign function to a variable
 f = square
 print(f(5))
@@ -154,7 +154,7 @@ print(f(5))
 
 ```py
 def square(x):
-    return (x) x (x)
+    return x * x
 def my_map(func, arg_list):
     result = []
     for i in arg_list:
@@ -174,7 +174,7 @@ print(squares)
 
 ```py
 def square(x):
-    return (x) x (x)
+    return x * x
 nums = [1, 2, 3, 4, 5]
 squared_nums = map(square, nums)
 print(list(squared_nums))

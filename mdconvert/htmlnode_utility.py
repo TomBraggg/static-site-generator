@@ -9,7 +9,7 @@ def markdown_to_html_str(markdown: str) -> str:
     for block in blocks:
         block_type = block_to_block_type(block)
         trimmed_block = _trim_block(block, block_type)
-        text_nodes = text_to_textnodes(trimmed_block)
+        text_nodes = text_to_textnodes(trimmed_block, block_type)
         child_html_nodes = []
         for text_node in text_nodes:
             child_html_node = text_node_to_html_node(text_node)

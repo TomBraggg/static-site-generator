@@ -2,6 +2,7 @@ import re
 from mdconvert.htmlnode import HTMLNode
 from mdconvert.textnode import TextNode, TextType
 from mdconvert.leafnode import LeafNode
+from mdconvert.mdblocks import BlockType
 
 
 def text_node_to_html_node(text_node: TextNode) -> HTMLNode:
@@ -25,10 +26,11 @@ def text_node_to_html_node(text_node: TextNode) -> HTMLNode:
         case _:
            raise Exception(f"Text type {text_node.text_type} not found") 
 
-def text_to_textnodes(text: str) -> list[TextNode]:
+def text_to_textnodes(text: str, blocktype: str) -> list[TextNode]:
     nodes = [TextNode(text, TextType.TEXT)]
     nodes = _split_nodes_delimeter(nodes, '**', TextType.BOLD)
-    nodes = _split_nodes_delimeter(nodes, '*', TextType.ITALIC)
+    if blocktype != BlockType.CODE.value:
+        nodes = _split_nodes_delimeter(nodes, '*', TextType.ITALIC)
     nodes = _split_nodes_delimeter(nodes, '`', TextType.CODE)
     nodes = _split_nodes_image(nodes)
     nodes = _split_nodes_link(nodes)
