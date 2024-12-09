@@ -14,3 +14,5 @@ Converts to:
 ### Quick Start
 Running main.sh will display the .md files found in the /content directory on localhost:8888.
 Replace the placeholder index.md files with your own md files and they will be displayed.
+
+## Contributing
